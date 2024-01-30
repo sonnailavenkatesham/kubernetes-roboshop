@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    name: roman
+    age: 88
+    gender: male
+spec:
+  containers:
+  - name: web
+    image: nginx
+    ports:
+    - containerPort: 80
+---
+apiVersion:
+kind: Service
+metadata:
+  name: service
+spec:
+  type: LoadBalancer
+  selector:
+    name: roman
+    age: 88
+    gender: male
+  ports:
+  - name: web
+    protocal: TCP
+    NodePort: 8080 
