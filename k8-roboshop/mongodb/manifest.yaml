@@ -26,7 +26,7 @@ kind: Service
 metadata:
   name: mongodb
 spec:
-  slector:
+  selector:
     tier: database
     component: mongodb
   ports:
