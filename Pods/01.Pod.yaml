@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod
+  namespace: roboshop # if not attached namespace it will attached to default name space
+spec:
+  container:
+  - name: web
+    image: nginx
+    ports:
+    - containerPort: 80

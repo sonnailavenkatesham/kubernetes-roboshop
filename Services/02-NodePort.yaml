@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web-application
+  labels:
+    project: roboshop
+    app: front-end
+    component: web
+spec:
+  containers:
+  - name: web
+    image: nginx
+    ports:
+    - containerPort: 80
+      name: http-web-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service exposing to web
+spec:
+  type: NodePort # By mentioning type as NodePort we can use NodePort and attached to above Pod.
+  selector:
+    project: roboshop
+    app: front-end
+    component: web
+  ports:
+  - name: web
+    protocol: http
+    port: 80
+    targetPort: http-web-service
+
+

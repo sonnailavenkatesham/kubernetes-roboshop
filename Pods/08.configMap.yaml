@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-credetials
+data:
+  USER_NAME: "roboshop"
+  PASSWORD: "Roboshop@123"
+
+
+# for references i am using the below Pod but it should be another file.
+# this id for single single varibles for configMap
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: project
+spec:
+  containers:
+  - name: web-1
+    image: nginx
+    ports:
+    - containerPort: 80
+  
+  - name: web-2
+    image: almalinux
+    env: 
+    - name: roboshop user_name
+      valueFrom:
+        configMapKeyRef:
+          name: configmap-credentials
+          User: USER_NAME # taken from above configMAP
+    - name: roboshop password
+      valuesFrom:
+        configMapKeyRes:
+        name: configmap-credentials
+        password: PASSWORD # taken from above configMAP

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: imagePullPolicy
+spec:
+  containers:
+  - name: web
+    image: nginx
+    imagePullPolicy: Always
+    ports:
+    - containerPort: 80
+  - name: web-2
+    image: almalinux
+    imagePullPolicy: Always
+    ports:
+    - containerPort: 8080

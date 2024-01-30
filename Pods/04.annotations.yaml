@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: annotations-demo
+  annotations:
+    com.project.name: Roboshop
+    com.environment.type: dev
+    com.component.name: web
+spec:
+  containers:
+  - name: web
+    image: nginx
+    ports:
+    - containerPort: 80
