@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb
+  labels:
+    project: roboshop
+    environment: dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      tier: database
+      componet: mongodb
+  template:
+    metadata:
+      labels:
+        tier: database
+        component: mongodb
+    spec:
+      containers:
+      - name: monogdb
+        image: venkat1095/mongodb:1.0.0
