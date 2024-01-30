@@ -4,7 +4,7 @@ metadata:
   name: nginx
   labels:
     name: roman
-    age: 88
+    age: "88"
     gender: male
 spec:
   containers:
@@ -21,7 +21,7 @@ spec:
   type: LoadBalancer
   selector:
     name: roman
-    age: 88
+    age: "88"
     gender: male
   ports:
   - name: web
