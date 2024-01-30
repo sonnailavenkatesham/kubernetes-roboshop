@@ -10,7 +10,7 @@ spec:
   selector:
     matchLabels:
       tier: database
-      componet: mongodb
+      component: mongodb
   template:
     metadata:
       labels:
