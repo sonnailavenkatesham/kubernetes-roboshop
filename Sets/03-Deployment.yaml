@@ -19,4 +19,4 @@ spec:
     spec:
       containers:
       - name: catalogue
-        image: nginx
+        image: nginx:1.14.2
