@@ -26,5 +26,5 @@ spec:
   ports:
   - name: web
     protocol: TCP
-    containerPort: 80
+    port: 80
   #NodePort: 8080 
