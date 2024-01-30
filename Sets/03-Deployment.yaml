@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: deployment_app
+  name: deployment
   labels:
     project: roboshop
     Environment: dev
