@@ -20,3 +20,18 @@ spec:
       containers:
       - name: monogdb
         image: venkat1095/mongodb:1.0.0
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb
+spec:
+  slector:
+    tier: database
+    component: mongodb
+  ports:
+  - name: mongodb-port
+    protocol: TCP
+    port: 27017
+    targetPort: 27017
+
