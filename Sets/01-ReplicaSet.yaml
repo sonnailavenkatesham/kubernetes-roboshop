@@ -1,0 +1,24 @@
+apiVersion: app/v1
+kind: ReplicaSet
+metadata:
+  name: replicaset
+  labels:
+    project: roboshop
+    environment: dev
+spec:
+  replicas: 2
+  selector:
+    matchLabel:
+      project: roboshop
+      environment: dev
+      component: web
+  template:
+    metadata:
+      labels:
+        project: roboshop
+        environment: dev
+        component: web
+    spec:
+      containers:
+      - name: web
+        image: nginx
