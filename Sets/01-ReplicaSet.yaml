@@ -12,6 +12,7 @@ spec:
       project: roboshop
       environment: dev
       component: web
+      tier: frontend
   template:
     metadata:
       labels:
