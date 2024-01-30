@@ -25,5 +25,5 @@ spec:
     gender: male
   ports:
   - name: web
-    protocal: TCP
+    protocol: TCP
     NodePort: 8080 
