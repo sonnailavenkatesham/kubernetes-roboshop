@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: web-config
+  name: nginx-config
   namespace: roboshop
 data:
   nginx.conf: |
@@ -119,7 +119,7 @@ spec:
       volumes:
       - name: nginx-conf
         configMap:
-          name: web-conf
+          name: nginx-conf
           items:
             - key: nginx.conf
               path: nginx.conf    
@@ -142,7 +142,7 @@ spec:
   type: LoadBalancer
   selector:
     component: web
-    ties: web
+    tier: web
   ports:
   - name: web-port
     protocol: TCP
