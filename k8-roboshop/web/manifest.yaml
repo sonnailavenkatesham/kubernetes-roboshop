@@ -108,30 +108,29 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      tier: frontend
+      tier: database
       component: web
   template:
     metadata:
       labels:
-        tier: frontend
+        tier: database
         component: web
     spec:
       volumes:
       - name: nginx-conf
         configMap:
-          name: nginx-conf
+          name: nginx
           items:
-            - key: nginx.conf
-              path: nginx.conf    
+          - key: nginx.conf
+            path: nginx.conf
       containers:
-      - name: web
+      - name: catalogue
         image: venkat1095/web:1.0.0
         volumeMounts:
-        - name: nginx-conf
+        - name: nginx-conf # name of the volume you created above
           mountPath: /etc/nginx/nginx.conf
           subPath: nginx.conf
           readOnly: true
-
 ---
 apiVersion: v1
 kind: Service
@@ -141,10 +140,11 @@ metadata:
 spec:
   type: LoadBalancer
   selector:
-    tier: frontend
+    tier: database
     component: web
   ports:
   - name: web-port
     protocol: TCP
     port: 80
     targetPort: 80
+
