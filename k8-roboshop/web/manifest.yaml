@@ -109,12 +109,12 @@ spec:
   selector:
     matchLabel:
       component: web
-      tier: web
+      tier: frontend
   template:
     metadata:
       labels:
         component: web
-        tier: web
+        tier: frontend
     spec:
       volumes:
       - name: nginx-conf
@@ -142,7 +142,7 @@ spec:
   type: LoadBalancer
   selector:
     component: web
-    tier: web
+    tier: frontend
   ports:
   - name: web-port
     protocol: TCP
