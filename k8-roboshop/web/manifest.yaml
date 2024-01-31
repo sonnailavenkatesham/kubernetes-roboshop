@@ -84,9 +84,9 @@ data:
             root   /usr/share/nginx/html;
         }
 
-        # location /api/catalogue/ {
-        #   proxy_pass http://catalogue:8080/;
-        # }
+        location /api/catalogue/ {
+          proxy_pass http://catalogue:8080/;
+        }
 
         location /nginx_status {
             stub_status on;
@@ -101,39 +101,37 @@ kind: Deployment
 metadata:
   name: web
   namespace: roboshop
-  labels: # these labels belong to deployment
-    app: web
-    tier: web
+  labels:
     project: roboshop
+    environment: dev
 spec:
   replicas: 1
   selector:
-    matchLabels: # these labels should match with pod
-      app: web
-      tier: web
-      project: roboshop
-  template: # this is the pod definition
+    matchLabels:
+      component: web
+      tier: frontend
+  template:
     metadata:
       labels:
-        app: web
-        tier: web
-        project: roboshop
+        component: web
+        tier: frontend
     spec:
       volumes:
       - name: nginx-conf
         configMap:
-          name: nginx
+          name: nginx-conf
           items:
-          - key: nginx.conf
-            path: nginx.conf
+            - key: nginx.conf
+              path: nginx.conf    
       containers:
-      - name: catalogue
+      - name: web
         image: venkat1095/web:1.0.0
         volumeMounts:
-        - name: nginx-conf # name of the volume you created above
+        - name: nginx-conf
           mountPath: /etc/nginx/nginx.conf
           subPath: nginx.conf
           readOnly: true
+
 ---
 apiVersion: v1
 kind: Service
@@ -143,11 +141,10 @@ metadata:
 spec:
   type: LoadBalancer
   selector:
-    app: web
-    tier: web
-    project: roboshop
+    component: web
+    tier: frontend
   ports:
   - name: web-port
     protocol: TCP
-    port: 80 # this port belongs to service
-    targetPort: 80 # this port belongs to container
+    port: 80
+    targetPort: 80
