@@ -9,7 +9,7 @@ metadata:
 spec:
   replicas: 1
   selector:
-    matchLebels:
+    matchLabels:
       component: catalogue
       tier: app
   template:
