@@ -108,13 +108,13 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      component: web
       tier: frontend
+      component: web
   template:
     metadata:
       labels:
-        component: web
         tier: frontend
+        component: web
     spec:
       volumes:
       - name: nginx-conf
@@ -141,8 +141,8 @@ metadata:
 spec:
   type: LoadBalancer
   selector:
-    component: web
     tier: frontend
+    component: web
   ports:
   - name: web-port
     protocol: TCP
