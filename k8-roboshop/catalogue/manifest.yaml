@@ -22,8 +22,8 @@ spec:
       - name: catalogue
         image: venkat1095/catalogue:1.0.0
         envFrom:
-        configMapRef:
-          name: catalogue-conf
+          congigMapRef:
+            name: catalogue-conf
 ---
 apiVersion: v1
 kind: Service
@@ -32,13 +32,15 @@ metadata:
   namespace: roboshop
 spec:
   selector:
+    tier: web
     component: catalogue
-    tier: app
   ports:
   - name: catalogue-port
     protocol: TCP
     port: 8080
     targetPort: 8080
+
+
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -47,4 +49,4 @@ metadata:
   namespace: roboshop
 data:
   MONGO: "true"
-  MONGO_URL: "mongodb://mongodb:27017/catalogue"
+  MONGO_URL: "monogodb://monogodb:27017/catalogue"
