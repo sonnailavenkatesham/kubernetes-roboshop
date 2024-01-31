@@ -106,6 +106,7 @@ metadata:
     environment: dev
 spec:
   replicas: 1
+  type: LoadBalancer
   selector:
     matchLabels:
       component: web
