@@ -5,26 +5,25 @@ metadata:
   namespace: roboshop
   labels:
     project: roboshop
+    environment: dev
 spec:
   replicas: 1
   selector:
     matchLabels:
-      tier: web
+      tier: app
       component: catalogue
-      environment: dev
   template:
     metadata:
       labels:
-        tier: web
+        tier: app
         component: catalogue
-        environment: dev
     spec:
       containers:
       - name: catalogue
         image: venkat1095/catalogue:1.0.0
         envFrom:
-          configMapRef:
-            name: catalogue
+        - configMapRef:
+            name: catalogue-conf
 ---
 apiVersion: v1
 kind: Service
@@ -33,22 +32,20 @@ metadata:
   namespace: roboshop
 spec:
   selector:
-    tier: web
+    tier: app
     component: catalogue
-    environment: dev
   ports:
   - name: catalogue-port
     protocol: TCP
     port: 8080
     targetPort: 8080
-
-
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: catalogue
+  name: catalogue-conf
   namespace: roboshop
 data:
   MONGO: "true"
-  MONGO_URL: "monogodb://monogodb:27017/catalogue"
+  MONGO_URL: "mongodb://mongodb:27017/catalogue"
+
