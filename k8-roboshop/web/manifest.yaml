@@ -103,18 +103,20 @@ metadata:
   namespace: roboshop
   labels:
     project: roboshop
-    environment: dev
+    
 spec:
   replicas: 1
   selector:
     matchLabels:
       tier: database
-      component: web
+      component: 
+      environment: dev
   template:
     metadata:
       labels:
         tier: database
         component: web
+        environment: dev
     spec:
       volumes:
       - name: nginx-conf
@@ -124,7 +126,7 @@ spec:
           - key: nginx.conf
             path: nginx.conf
       containers:
-      - name: catalogue
+      - name: web
         image: venkat1095/web:1.0.0
         volumeMounts:
         - name: nginx-conf # name of the volume you created above
@@ -142,6 +144,7 @@ spec:
   selector:
     tier: database
     component: web
+    environment: dev
   ports:
   - name: web-port
     protocol: TCP
