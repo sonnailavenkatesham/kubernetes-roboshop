@@ -17,13 +17,13 @@ spec:
       labels:
         component: catalogue
         tier: app
-  spec:
-    containers:
-    - name: catalogue
-      image: venkat1095/catalogue:1.0.0
-      envFrom:
-      configMapRef:
-        name: catalogue
+    spec:
+      containers:
+      - name: catalogue
+        image: venkat1095/catalogue:1.0.0
+        envFrom:
+        configMapRef:
+          name: catalogue
 ---
 apiVersion: v1
 kind: Service
