@@ -5,25 +5,26 @@ metadata:
   namespace: roboshop
   labels:
     project: roboshop
-    environment: dev
 spec:
   replicas: 1
   selector:
     matchLabels:
       tier: web
       component: catalogue
+      environment: dev
   template:
     metadata:
       labels:
         tier: web
         component: catalogue
+        environment: dev
     spec:
       containers:
       - name: catalogue
         image: venkat1095/catalogue:1.0.0
         envFrom:
-          congigMapRef:
-            name: catalogue-conf
+          configMapRef:
+            name: catalogue
 ---
 apiVersion: v1
 kind: Service
@@ -34,6 +35,7 @@ spec:
   selector:
     tier: web
     component: catalogue
+    environment: dev
   ports:
   - name: catalogue-port
     protocol: TCP
@@ -45,7 +47,7 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: catalogue-conf
+  name: catalogue
   namespace: roboshop
 data:
   MONGO: "true"
