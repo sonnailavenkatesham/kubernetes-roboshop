@@ -98,22 +98,20 @@ metadata:
   name: web
   namespace: roboshop
   labels: # these labels belong to deployment
-    app: web
-    tier: web
     project: roboshop
 spec:
   replicas: 1
   selector:
     matchLabels: # these labels should match with pod
-      app: web
+      component: web
+      environment: dev
       tier: web
-      project: roboshop
   template: # this is the pod definition
     metadata:
       labels:
-        app: web
+        component: web
+        environment: dev
         tier: web
-        project: roboshop
     spec:
       volumes:
       - name: nginx-conf
@@ -125,13 +123,6 @@ spec:
       containers:
       - name: web
         image: venkat1095/web:1.0.0
-        resources:
-          requests:
-            cpu: "50m"
-            memory: "68Mi"
-          limits:
-            cpu: "100m"
-            memory: "128Mi"
         volumeMounts:
         - name: nginx-conf # name of the volume you created above
           mountPath: /etc/nginx/nginx.conf
@@ -146,31 +137,11 @@ metadata:
 spec:
   type: LoadBalancer
   selector:
-    app: web
+    component: web
+    environment: dev
     tier: web
-    project: roboshop
   ports:
   - name: web-port
     protocol: TCP
     port: 80 # this port belongs to service
     targetPort: 80 # this port belongs to container
----
-apiVersion: autoscaling/v2
-kind: HorizontalPodAutoscaler
-metadata:
-  name: web
-  namespace: roboshop
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: web
-  minReplicas: 1
-  maxReplicas: 10
-  metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 75

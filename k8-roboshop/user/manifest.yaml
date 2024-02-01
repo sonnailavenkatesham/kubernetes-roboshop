@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment:
+metadata:
+  name: user
+  namespace: roboshop
+  labels:
+    project: roboshop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: user
+      environment: dev
+      tier: app
+  template:
+    metadata:
+      labels:
+        component: user
+        environment: dev
+        tier: app
+    spec:
+      containers:
+      - name: user
+        image: venkat1095/user:1.0.0
+        envFrom:
+        - configMapRef:
+            name: user
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user
+  namespace: roboshop
+  labels:
+    project: roboshop
+spec:
+  type: cluster-ip
+  selector:
+    component: user
+    environment: dev
+    tier: app
+  ports:
+  - name: user-port
+    protocol: TCP
+    port: 8080
+    targetPort: 8080
+---
+apiVersion: v1
+kind: CongigMap
+metadata:
+  name: user
+  namespace: roboshop
+data:
+  REDIS_HOST: "redis"
+  CATALOGUE_HOST: "catalogue"
+  CATALOGUE_PORT: "8080"
